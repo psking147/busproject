@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load sbclc_filter %}
+{% block content %}
+<div class="left">
+<div class="container my-3">
+    <div class="row justify-content-end my-3">
+        <div class="col-8 input-group">
+            <input type="text" class="form-control kw" placeholder="ARS번호 또는 정류장이름" value="" onkeypress="return search(event)">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search" >검색</button>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>ARS-ID</th>
+            <th>정류장이름</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if stop_list %}
+        {% for stop in stop_list %}
+        <tr>
+            <td>{{ stop_list.paginator.count|sub:stop_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>
+                <a href="{% url 'sbclc:stopdetail' stop.stop.ars %}"style="color:black;" >
+                    {{ stop.stop.ars }}
+                </a>
+            </td>
+            <td>{{ stop.stop.name }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">정류장이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <!-- page -->
+    <ul class="pagination justify-content-center">
+        <!-- first page -->
+        <li class="page-item">
+            <a class="page-link" style="color:black;" data-page="{{ 1 }}" href="#">처음</a>
+        </li>
+        <!-- before page -->
+        {% if stop_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" style="color:black;" data-page="{{ stop_list.previous_page_number }}" href="#">&laquo</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" style="color:black;" tabindex="-1" aria-disabled="true" href="#">&laquo</a>
+        </li>
+        {% endif %}
+        <!-- page list -->
+        {% for page_number in stop_list.paginator.page_range %}
+        {% if page_number >= stop_list.number|add:-3 and page_number <= stop_list.number|add:3 %}
+            {% if page_number == stop_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" style="color:white; background-color:black; border:black" data-page="{{ page_number }}" href="#">
+                    {{ page_number }}
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" style="color:black;" data-page="{{ page_number }}" href="#">
+                    {{ page_number }}
+                </a>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- next page -->
+        {% if stop_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" style="color:black;" data-page="{{ stop_list.next_page_number }}" href="#">&raquo</a>
+         </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" style="color:black;" tabindex="-1" aria-disabled="true" href="#">&raquo</a>
+        </li>
+        {% endif %}
+        <!-- last page -->
+        <li class="page-item">
+            <a class="page-link" style="color:black;" data-page="{{ stop_list.paginator.num_pages }}" href="#">마지막</a>
+        </li>
+    </ul>
+    <!-- page end -->
+</div>
+</div>
+<div class="right">
+    {{ m | safe }}
+</div>
+<form id="searchForm" method="get" action="{% url 'sbclc:stopindex' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+<script type='text/javascript'>
+function search(e) {
+    if (e.keyCode == 13) {
+        $("#kw").val($(".kw").val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    }
+}
+$(document).ready(function(){
+    $(".page-link").on('click', function() {
+        $("#page").val($(this).data("page"));
+        $("#searchForm").submit();
+    });
+
+    $("#btn_search").on('click', function() {
+        $("#kw").val($(".kw").val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    });
+
+    if (e.keyCode == 13) {
+        $("#kw").val($(".kw").val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    }
+});
+</script>
+{% endblock %}

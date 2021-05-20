@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Information</h3>
+                <p>
+                    lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                    lorem ipsumlorem ipsumlorem ipsum
+                    lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                    lorem ipsumlorem ipsum.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3> Geo map</h3>
+                {{m | safe}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

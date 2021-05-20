@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+  <h2 class="border-bottom py-2">{{ stop.ars }} - {{ stop.name }}</h2>
+  <div class="card my-3">
+    <div class="card-body">
+      <div class="card-text" style="white-space: pre-line;">
+        {% if hour == '00' %}
+          {% if congestion.c0 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c0 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c0 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '01' %}
+          {% if congestion.c1 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c1 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c1 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '02' %}
+          {% if congestion.c2 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c2 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c2 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '03' %}
+          {% if congestion.c3 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c3 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c3 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '04' %}
+          {% if congestion.c4 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c4 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c4 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '05' %}
+          {% if congestion.c5 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c5 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c5 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '06' %}
+          {% if congestion.c6 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c6 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c6 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '07' %}
+          {% if congestion.c7 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c7 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c7 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '08' %}
+          {% if congestion.c8 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c8 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c8 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '09' %}
+          {% if congestion.c9 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c9 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c9 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '10' %}
+          {% if congestion.c10 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c10 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c10 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '11' %}
+          {% if congestion.c11 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c11 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c11 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '12' %}
+          {% if congestion.c12 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c12 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c12 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '13' %}
+          {% if congestion.c13 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c13 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c13 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '14' %}
+          {% if congestion.c14 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c14 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c14 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '15' %}
+          {% if congestion.c15 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c15 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c15 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '16' %}
+          {% if congestion.c16 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c16 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c16 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '17' %}
+          {% if congestion.c17 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c17 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c17 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '18' %}
+          {% if congestion.c18 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c18 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c18 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '19' %}
+          {% if congestion.c19 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c19 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c19 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '20' %}
+          {% if congestion.c20 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c20 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c20 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '21' %}
+          {% if congestion.c21 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c21 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c21 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '22' %}
+          {% if congestion.c22 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c22 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c22 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% elif hour == '23' %}
+          {% if congestion.c23 >= 4000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.c23 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.c23 >= 500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+        {% endif %}
+        혼잡도 : {{ congestion.c0 }} {{ congestion.c1 }} {{ congestion.c2 }} {{ congestion.c3 }} {{ congestion.c4 }} {{ congestion.c5 }} {{ congestion.c6 }} {{ congestion.c7 }} {{ congestion.c8 }} {{ congestion.c9 }} {{ congestion.c10 }} {{ congestion.c11 }} {{ congestion.c12 }} {{ congestion.c13 }} {{ congestion.c14 }} {{ congestion.c15 }} {{ congestion.c16 }} {{ congestion.c17 }} {{ congestion.c18 }} {{ congestion.c19 }} {{ congestion.c20 }} {{ congestion.c21 }} {{ congestion.c22 }} {{ congestion.c23 }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
