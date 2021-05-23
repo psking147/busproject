@@ -10,6 +10,7 @@
     <!-- sbclc CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <script language="JavaScript" type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+
     <title>서울시 버스 혼잡도 측정 및 노선 생성 </title>
     <style>
         div.left {
@@ -21,6 +22,19 @@
             width: 65%;
             float: right;
             height: 100%;
+        }
+        .modal-dialog {
+            width:100vh;
+            margin: 10vh auto;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+        iframe {
+            width:100%;
+            height:40vh;
+            border:none;
         }
     </style>
 </head>

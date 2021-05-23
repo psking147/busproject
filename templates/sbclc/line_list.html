@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load sbclc_filter %}
 {% block content %}
-<div class="left">
+<div class="left" id="left">
 <div class="container my-3">
     <div class="row justify-content-end my-3">
         <div class="col-8 input-group">
@@ -24,9 +24,26 @@
         <tr>
             <td>{{ line_list.paginator.count|sub:line_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'sbclc:linedetail' line.line %}"style="color:black;" }>
-                    {{ line.line }}
-                </a>
+                <a data-toggle="modal" href="#myModal{{ line.id }}" style="color:black"><b>{{ line.line }}</b></a>
+                    <div class="modal fade" id="myModal{{ line.id }}" role="dialog" name="{{ line.line }}">
+                        <div class="modal-dialog modal-xl">
+                            <!-- Modal content -->
+                            <div class="modal-content modal-xl">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">노선 혼잡도</h5>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="{% url 'sbclc:linedetail' line.line %}"></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </td>
         </tr>
         {% endfor %}
@@ -55,7 +72,7 @@
         {% endif %}
         <!-- page list -->
         {% for page_number in line_list.paginator.page_range %}
-        {% if page_number >= line_list.number|add:-5 and page_number <= line_list.number|add:5 %}
+        {% if page_number >= line_list.number|add:-3 and page_number <= line_list.number|add:3 %}
             {% if page_number == line_list.number %}
             <li class="page-item active" aria-current="page">
                 <a class="page-link" style="color:white; background-color:black; border:black" data-page="{{ page_number }}" href="#">
@@ -89,12 +106,13 @@
     <!-- page end -->
 </div>
 </div>
-<div class="right">
+<div class="right" id="right">
     {{ m | safe }}
 </div>
 <form id="searchForm" method="get" action="{% url 'sbclc:lineindex' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="line" name="line" value="{{ line }}">
 </form>
 
 <script type='text/javascript'>
@@ -109,6 +127,13 @@ $(document).ready(function(){
     $(".page-link").on('click', function() {
         $("#page").val($(this).data("page"));
         $("#searchForm").submit();
+    });
+
+    $("[id^='myModal']").on('hide.bs.modal', function(){
+        var line = $(this).attr('name')
+        var page = "{{ page }}"
+        var kw = "{{ kw }}"
+        window.location.assign("/line?kw=" + kw + "&page=" + page + "&line=" + line )
     });
 
     $("#btn_search").on('click', function() {

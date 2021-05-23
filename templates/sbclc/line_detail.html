@@ -1,20 +1,33 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="container my-3">
-  <h2 class="border-bottom py-2">{{ congestion.line }}</h2>
-  <div class="card my-3">
-    <div class="card-body">
-      <div class="card-text" style="white-space: pre-line;">
-        {% if congestion.congestion >= 12070 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:red">'매우 혼잡'</strong> 입니다.
-        {% elif congestion.congestion >= 7683 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:orange">'혼잡'</strong> 입니다.
-        {% elif congestion.congestion >= 4921 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:#F5E071">'보통'</strong> 입니다.
-        {% else %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:#44ED5D">'여유'</strong> 입니다.
-        {% endif %}
-        {% for l in line %}
-          {{ l.order }} <a href="/stop/{{ l.stop }}">{{ l.stop }}</a>
-        {% endfor %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- sbclc CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script language="JavaScript" type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+</head>
+  <body>
+  <div class="container-fluid my-3">
+    <h2 class="border-bottom py-2">{{ congestion.line }}</h2>
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="card-text" >
+          {% if congestion.congestion >= 12070 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:red">'매우 혼잡'</strong> 입니다.
+          {% elif congestion.congestion >= 7683 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:orange">'혼잡'</strong> 입니다.
+          {% elif congestion.congestion >= 4921 %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:#F5E071">'보통'</strong> 입니다.
+          {% else %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:#44ED5D">'여유'</strong> 입니다.
+          {% endif %}
+          <br><br>
+          {% for l in line %}
+            {{ l.order }} <a href="/stop/{{ l.stop }}">{{ l.stop }}</a>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
-</div>
-{% endblock %}
+  </body>

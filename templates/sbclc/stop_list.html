@@ -24,12 +24,29 @@
         {% for stop in stop_list %}
         <tr>
             <td>{{ stop_list.paginator.count|sub:stop_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>{{ stop.stop.ars }}</td>
             <td>
-                <a href="{% url 'sbclc:stopdetail' stop.stop.ars %}"style="color:black;" >
-                    {{ stop.stop.ars }}
-                </a>
+                <a data-toggle="modal" href="#myModal{{stop.id}}" style="color:black"><b>{{ stop.stop.name }}</b></a>
+                    <div class="modal fade" id="myModal{{stop.id}}" role="dialog">
+                        <div class="modal-dialog modal-xl">
+                            <!-- Modal content -->
+                            <div class="modal-content modal-xl">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">정류장 혼잡도</h5>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="{% url 'sbclc:stopdetail' stop.stop.ars %}"></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </td>
-            <td>{{ stop.stop.name }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -92,8 +109,10 @@
 </div>
 </div>
 <div class="right">
-    {{ m | safe }}
+    <iframe src="{% url 'sbclc:maps' %}" style="height:80vh"></iframe>
+    <!--{{ m | safe }}-->
 </div>
+
 <form id="searchForm" method="get" action="{% url 'sbclc:stopindex' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
@@ -107,6 +126,7 @@ function search(e) {
         $("#searchForm").submit();
     }
 }
+
 $(document).ready(function(){
     $(".page-link").on('click', function() {
         $("#page").val($(this).data("page"));
