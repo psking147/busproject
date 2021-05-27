@@ -512,7 +512,9 @@ def newcong(request):
 
 def csvtomodel(request):
     #stop table
-    path1 = '/data/정류장분류_혼잡도_방향_짝.csv'
+    print('start')
+    path1 = '/home/ubuntu/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'
+    print('start2')
     with open(path1, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
@@ -533,7 +535,7 @@ def csvtomodel(request):
                 pair=row['pair']
             )
     #line table
-    path2 = '/data/stationlist.csv'
+    path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
     with open(path2, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
@@ -546,7 +548,7 @@ def csvtomodel(request):
             )
 
     #line congestion table
-    path3 ='/data/bus_line_com.csv'
+    path3 = '/home/ubuntu/projects/mysite/data/bus_line_com.csv'
     with open(path3, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
@@ -556,7 +558,7 @@ def csvtomodel(request):
                 congestion=row['혼잡도']
             )
     #stop congestion table
-    path4 = '/data/bus_station_com.csv'
+    path4 = '/home/ubuntu/projects/mysite/data/bus_station_com.csv'
     with open(path4, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
