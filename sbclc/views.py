@@ -554,33 +554,34 @@ def csvtomodel(request):
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
-            StopCongestion.objects.create(
-                stop=Stop.objects.get(ars=row['정류장ARS']),
-                c0=row['0시'],
-                c1=row['1시'],
-                c2=row['2시'],
-                c3=row['3시'],
-                c4=row['4시'],
-                c5=row['5시'],
-                c6=row['6시'],
-                c7=row['7시'],
-                c8=row['8시'],
-                c9=row['9시'],
-                c10=row['10시'],
-                c11=row['11시'],
-                c12=row['12시'],
-                c13=row['13시'],
-                c14=row['14시'],
-                c15=row['15시'],
-                c16=row['16시'],
-                c17=row['17시'],
-                c18=row['18시'],
-                c19=row['19시'],
-                c20=row['20시'],
-                c21=row['21시'],
-                c22=row['22시'],
-                c23=row['23시'],
-            )
+            if row['정류장ARS'] > 19535:
+                StopCongestion.objects.create(
+                    stop=Stop.objects.get(ars=row['정류장ARS']),
+                    c0=row['0시'],
+                    c1=row['1시'],
+                    c2=row['2시'],
+                    c3=row['3시'],
+                    c4=row['4시'],
+                    c5=row['5시'],
+                    c6=row['6시'],
+                    c7=row['7시'],
+                    c8=row['8시'],
+                    c9=row['9시'],
+                    c10=row['10시'],
+                    c11=row['11시'],
+                    c12=row['12시'],
+                    c13=row['13시'],
+                    c14=row['14시'],
+                    c15=row['15시'],
+                    c16=row['16시'],
+                    c17=row['17시'],
+                    c18=row['18시'],
+                    c19=row['19시'],
+                    c20=row['20시'],
+                    c21=row['21시'],
+                    c22=row['22시'],
+                    c23=row['23시'],
+                )
     #line table
     path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
     with open(path2, newline='', encoding='CP949') as csvfile:
