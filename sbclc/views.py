@@ -515,7 +515,7 @@ def csvtomodel(request):
     print('start')
     path1 = '/home/ubuntu/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'
     print('start2')
-    with open(path1, newline='') as csvfile:
+    with open(path1, newline='', encoding='CP949') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
@@ -536,7 +536,7 @@ def csvtomodel(request):
             )
     #line table
     path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
-    with open(path2, newline='') as csvfile:
+    with open(path2, newline='', encoding='CP949') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
@@ -549,7 +549,7 @@ def csvtomodel(request):
 
     #line congestion table
     path3 = '/home/ubuntu/projects/mysite/data/bus_line_com.csv'
-    with open(path3, newline='') as csvfile:
+    with open(path3, newline='', encoding='CP949') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
@@ -559,7 +559,7 @@ def csvtomodel(request):
             )
     #stop congestion table
     path4 = '/home/ubuntu/projects/mysite/data/bus_station_com.csv'
-    with open(path4, newline='') as csvfile:
+    with open(path4, newline='', encoding='CP949') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
