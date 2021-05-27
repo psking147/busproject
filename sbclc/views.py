@@ -554,7 +554,7 @@ def csvtomodel(request):
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
-            if row['정류장ARS'] > 19535:
+            if int(row['정류장ARS']) > 19535:
                 StopCongestion.objects.create(
                     stop=Stop.objects.get(ars=row['정류장ARS']),
                     c0=row['0시'],
