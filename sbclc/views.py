@@ -170,7 +170,7 @@ def confirm(request):
     elif gu == "중랑구":
         source_ars = 7418
     line_length = int(distance)
-    stops_label = pd.read_csv('data/정류장분류_혼잡도_방향.csv', encoding="CP949")
+    stops_label = pd.read_csv('data/정류장분류_혼잡도_방향_짝.csv', encoding="CP949")
 
     candidate = []
     max_cong = 0
@@ -509,16 +509,13 @@ def confirm(request):
 def newcong(request):
     context = {}
     return render(request, "sbclc/newcong.html", context)
-'''
+
 def csvtomodel(request):
-    path = '/projects/mysite/data/정류장분류_혼잡도_방향.csv'
-    with open(path, newline='') as csvfile:
+    #stop table
+    path1 = '/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'
+    with open(path1, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
-        i=0
         for row in data_reader:
-            if i == 0:
-                i+=1
-                continue
             print(row)
             Stop.objects.create(
                 index=row['index'],
@@ -532,24 +529,63 @@ def csvtomodel(request):
                 before=row['before'],
                 after=row['after'],
                 xVector=row['xVector'],
-                yVector=row['yVector']
+                yVector=row['yVector'],
+                pair=row['pair']
             )
-    return HttpResponse('create models~~')
-'''
-
-'''
-def csvtomodel(request):
-    path = '/projects/mysite/data/stationlist.csv'
-    with open(path, newline='') as csvfile:
+    #line table
+    path2 = '/projects/mysite/data/stationlist.csv'
+    with open(path2, newline='') as csvfile:
         data_reader = csv.DictReader(csvfile)
-        i = 0
         for row in data_reader:
             print(row)
             Line.objects.create(
                 line_num=row['노선명'],
                 order=row['순번'],
                 stop=row['정류소번호'],
-                stop_name= row['정류소명']
+                stop_name=row['정류소명']
+            )
+
+    #line congestion table
+    path3 ='/projects/mysite/data/bus_line_com.csv'
+    with open(path3, newline='') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            print(row)
+            LineCongestion.objects.create(
+                line=row['버스번호'],
+                congestion=row['혼잡도']
+            )
+    #stop congestion table
+    path4 = '/projects/mysite/data/bus_station_com.csv'
+    with open(path4, newline='') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            print(row)
+            StopCongestion.objects.create(
+                stop=Stop.objects.get(ars=row['정류장ARS']),
+                c0=row['0시'],
+                c1=row['1시'],
+                c2=row['2시'],
+                c3=row['3시'],
+                c4=row['4시'],
+                c5=row['5시'],
+                c6=row['6시'],
+                c7=row['7시'],
+                c8=row['8시'],
+                c9=row['9시'],
+                c10=row['10시'],
+                c11=row['11시'],
+                c12=row['12시'],
+                c13=row['13시'],
+                c14=row['14시'],
+                c15=row['15시'],
+                c16=row['16시'],
+                c17=row['17시'],
+                c18=row['18시'],
+                c19=row['19시'],
+                c20=row['20시'],
+                c21=row['21시'],
+                c22=row['22시'],
+                c23=row['23시'],
             )
     return HttpResponse('create models~~')
-'''

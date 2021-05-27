@@ -16,6 +16,7 @@ class Stop(models.Model):
     after = models.PositiveIntegerField(null=True)
     xVector = models.FloatField(null=True)
     yVector = models.FloatField(null=True)
+    pair = models.PositiveIntegerField()
 
     def __str__(self):
         return self.name + '(' + str(self.ars) + ')'

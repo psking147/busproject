@@ -14,7 +14,7 @@ urlpatterns = [
     path('maps', views.maps, name='maps'),
     path('newline', views.newline, name='newline'),
     path('confirm', views.confirm, name='confirm'),
-    #path('csvtomodel', views.csvtomodel, name='csvtomodel'),
+    path('csvtomodel', views.csvtomodel, name='csvtomodel'),
 ]
 
 
