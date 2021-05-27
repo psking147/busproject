@@ -16,3 +16,5 @@ urlpatterns = [
     path('confirm', views.confirm, name='confirm'),
     #path('csvtomodel', views.csvtomodel, name='csvtomodel'),
 ]
+
+handler404 = 'common.views.page_not_found'
