@@ -10,6 +10,26 @@
     <!-- sbclc CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <script language="JavaScript" type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <style>
+
+    ul.mylist, ol.mylist {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+
+    max-width: 900px;
+    width: 100%;
+    }
+
+    ul.mylist li, ol.mylist li {
+    display: inline-block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #efefef;
+    font-size: 12px;
+    cursor: pointer;
+    }
+    </style>
 </head>
   <body>
   <div class="container-fluid my-3">
@@ -23,9 +43,15 @@
           {% else %} <strong>{{ congestion.line }}</strong> 노선 혼잡도는 평균적으로 <strong style="color:#44ED5D">'여유'</strong> 입니다.
           {% endif %}
           <br><br>
+          <ul class="mylist">
           {% for l in line %}
-            {{ l.order }} <a href="/stop/{{ l.stop }}">{{ l.stop }}</a>
+              {% if l.stop in allstops %}
+                <li>{{ l.order }} <a href="/stop/{{ l.stop }}">{{ l.stop_name }}</a></li>
+              {% else %}
+                <li>{{l.order }} {{ l.stop_name }}</li>
+              {% endif %}
           {% endfor %}
+          </ul>
         </div>
       </div>
     </div>

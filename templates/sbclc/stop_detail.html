@@ -10,6 +10,45 @@
     <!-- sbclc CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <script language="JavaScript" type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <style>
+    @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+    div.middle {
+            font-family: 'Nanum Gothic';
+            font-size: 50%;
+            position: absolute;
+
+    }
+    div.box1 {
+              float:left;
+              background: #F5E071;
+              width: 28px;
+              height: 40px;
+              outline: none;
+    }
+    div.box2 {
+                float:left;
+                background: #FE9A2E;
+                width: 28px;
+                height: 40px;
+                outline: none;
+            }
+    div.box3 {
+                float:left;
+                background: #FE2E2E;
+                width: 28px;
+                height: 40px;
+                outline: none;
+            }
+
+    div.box4 {
+                float:left;
+                background: #01DF3A;
+                width: 28px;
+                height: 40px;
+                outline: none;
+            }
+
+    </style>
 </head>
 <body>
   <div class="container-fluid my-3" style="width:100%">
@@ -126,7 +165,7 @@
             {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
             {% endif %}
           {% elif hour == '18' %}
-            {% if congestion.c18 >= 2500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> {{ congestion.c18 }}입니다.
+            {% if congestion.c18 >= 2500 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:red">'매우 혼잡'</strong> 입니다.
             {% elif congestion.c18 >= 1000 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:orange">'혼잡'</strong> 입니다.
             {% elif congestion.c18 >= 300 %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#F5E071">'보통'</strong> 입니다.
             {% else %}<strong>{{stop.name}}</strong> 정류장의 현재 혼잡도는 <strong style="color:#44ED5D">'여유'</strong> 입니다.
@@ -163,9 +202,155 @@
             {% endif %}
           {% endif %}
           <br><br>
-          <p>
-            혼잡도 : {{ congestion.c0 }} {{ congestion.c1 }} {{ congestion.c2 }} {{ congestion.c3 }} {{ congestion.c4 }} {{ congestion.c5 }} {{ congestion.c6 }} {{ congestion.c7 }} {{ congestion.c8 }} {{ congestion.c9 }} {{ congestion.c10 }} {{ congestion.c11 }} {{ congestion.c12 }} {{ congestion.c13 }} {{ congestion.c14 }} {{ congestion.c15 }} {{ congestion.c16 }} {{ congestion.c17 }} {{ congestion.c18 }} {{ congestion.c19 }} {{ congestion.c20 }} {{ congestion.c21 }} {{ congestion.c22 }} {{ congestion.c23 }}
-          </p>
+
+          <div class = "middle">
+
+          <center>
+          {% if congestion.c0 >= 2500 %}<div class = "box3"> 0시</div>
+           {% elif congestion.c0 >= 1000 %}<div class = "box2">0시</div>
+           {% elif congestion.c0 >= 300 %}<div class = "box1">0시</div>
+           {% else %}<div class = "box4">0시</div>
+           {% endif %}
+
+          {% if congestion.c1 >= 2500 %}<div class = "box3"> 1시</div>
+            {% elif congestion.c1 >= 1000 %}<div class = "box2">1시</div>
+            {% elif congestion.c1 >= 300 %}<div class = "box1">1시</div>
+            {% else %}<div class = "box4">1시</div>
+            {% endif %}
+
+          {% if congestion.c2 >= 2500 %}<div class = "box3"> 2시</div>
+            {% elif congestion.c2 >= 1000 %}<div class = "box2">2시</div>
+            {% elif congestion.c2 >= 300 %}<div class = "box1">2시</div>
+            {% else %}<div class = "box4">2시</div>
+            {% endif %}
+          {% if congestion.c3 >= 2500 %}<div class = "box3"> 3시</div>
+            {% elif congestion.c3 >= 1000 %}<div class = "box2">3시</div>
+            {% elif congestion.c3 >= 300 %}<div class = "box1">3시</div>
+            {% else %}<div class = "box4">3시</div>
+            {% endif %}
+
+          {% if congestion.c4 >= 2500 %}<div class = "box3"> 4시</div>
+            {% elif congestion.c4 >= 1000 %}<div class = "box2">4시</div>
+            {% elif congestion.c4 >= 300 %}<div class = "box1">4시</div>
+            {% else %}<div class = "box4">4시</div>
+            {% endif %}
+
+          {% if congestion.c5 >= 2500 %}<div class = "box3"> 5시</div>
+            {% elif congestion.c5 >= 1000 %}<div class = "box2">5시</div>
+            {% elif congestion.c5 >= 300 %}<div class = "box1">5시</div>
+            {% else %}<div class = "box4">5시</div>
+            {% endif %}
+
+          {% if congestion.c6 >= 2500 %}<div class = "box3"> 6시</div>
+            {% elif congestion.c6 >= 1000 %}<div class = "box2">6시</div>
+            {% elif congestion.c6 >= 300 %}<div class = "box1">6시</div>
+            {% else %}<div class = "box4">6시</div>
+            {% endif %}
+
+          {% if congestion.c7 >= 2500 %}<div class = "box3"> 7시</div>
+            {% elif congestion.c7 >= 1000 %}<div class = "box2">7시</div>
+            {% elif congestion.c7 >= 300 %}<div class = "box1">7시</div>
+            {% else %}<div class = "box4">7시</div>
+            {% endif %}
+
+          {% if congestion.c8 >= 2500 %}<div class = "box3"> 8시</div>
+            {% elif congestion.c8 >= 1000 %}<div class = "box2">8시</div>
+            {% elif congestion.c8 >= 300 %}<div class = "box1">8시</div>
+            {% else %}<div class = "box4">8시</div>
+            {% endif %}
+
+          {% if congestion.c9 >= 2500 %}<div class = "box3"> 9시</div>
+            {% elif congestion.c9 >= 1000 %}<div class = "box2">9시</div>
+            {% elif congestion.c9 >= 300 %}<div class = "box1">9시</div>
+            {% else %}<div class = "box4">9시</div>
+            {% endif %}
+
+          {% if congestion.c10 >= 2500 %}<div class = "box3"> 10시</div>
+            {% elif congestion.c10 >= 1000 %}<div class = "box2">10시</div>
+            {% elif congestion.c10 >= 300 %}<div class = "box1">10시</div>
+            {% else %}<div class = "box4">10시</div>
+            {% endif %}
+
+          {% if congestion.c11 >= 2500 %}<div class = "box3"> 11시</div>
+            {% elif congestion.c11 >= 1000 %}<div class = "box2">11시</div>
+            {% elif congestion.c11 >= 300 %}<div class = "box1">11시</div>
+            {% else %}<div class = "box4">11시</div>
+            {% endif %}
+
+          {% if congestion.c12 >= 2500 %}<div class = "box3"> 12시</div>
+            {% elif congestion.c12 >= 1000 %}<div class = "box2">12시</div>
+            {% elif congestion.c12 >= 300 %}<div class = "box1">12시</div>
+            {% else %}<div class = "box4">12시</div>
+            {% endif %}
+
+          {% if congestion.c13 >= 2500 %}<div class = "box3"> 13시</div>
+            {% elif congestion.c13 >= 1000 %}<div class = "box2">13시</div>
+            {% elif congestion.c13 >= 300 %}<div class = "box1">13시</div>
+            {% else %}<div class = "box4">13시</div>
+            {% endif %}
+
+          {% if congestion.c14 >= 2500 %}<div class = "box3"> 1시</div>
+            {% elif congestion.c14 >= 1000 %}<div class = "box2">14시</div>
+            {% elif congestion.c14 >= 300 %}<div class = "box1">14시</div>
+            {% else %}<div class = "box4">14시</div>
+            {% endif %}
+
+          {% if congestion.c15 >= 2500 %}<div class = "box3"> 15시</div>
+            {% elif congestion.c15 >= 1000 %}<div class = "box2">15시</div>
+            {% elif congestion.c15 >= 300 %}<div class = "box1">15시</div>
+            {% else %}<div class = "box4">15시</div>
+            {% endif %}
+
+          {% if congestion.c16 >= 2500 %}<div class = "box3"> 16시</div>
+            {% elif congestion.c16 >= 1000 %}<div class = "box2">16시</div>
+            {% elif congestion.c16 >= 300 %}<div class = "box1">16시</div>
+            {% else %}<div class = "box4">16시</div>
+            {% endif %}
+
+          {% if congestion.c17 >= 2500 %}<div class = "box3"> 17시</div>
+            {% elif congestion.c17 >= 1000 %}<div class = "box2">17시</div>
+            {% elif congestion.c17 >= 300 %}<div class = "box1">17시</div>
+            {% else %}<div class = "box4">17시</div>
+            {% endif %}
+
+          {% if congestion.c18 >= 2500 %}<div class = "box3"> 18시</div>
+            {% elif congestion.c18 >= 1000 %}<div class = "box2">18시</div>
+            {% elif congestion.c18 >= 300 %}<div class = "box1">18시</div>
+            {% else %}<div class = "box4">18시</div>
+            {% endif %}
+
+          {% if congestion.c19 >= 2500 %}<div class = "box3"> 19시</div>
+            {% elif congestion.c19 >= 1000 %}<div class = "box2">19시</div>
+            {% elif congestion.c19 >= 300 %}<div class = "box1">19시</div>
+            {% else %}<div class = "box4">19시</div>
+            {% endif %}
+
+          {% if congestion.c20 >= 2500 %}<div class = "box3"> 20시</div>
+            {% elif congestion.c20 >= 1000 %}<div class = "box2">20시</div>
+            {% elif congestion.c20 >= 300 %}<div class = "box1">20시</div>
+            {% else %}<div class = "box4">20시</div>
+            {% endif %}
+
+          {% if congestion.c21 >= 2500 %}<div class = "box3"> 21시</div>
+            {% elif congestion.c21 >= 1000 %}<div class = "box2">21시</div>
+            {% elif congestion.c21 >= 300 %}<div class = "box1">21시</div>
+            {% else %}<div class = "box4">21시</div>
+            {% endif %}
+
+          {% if congestion.c22 >= 2500 %}<div class = "box3"> 22시</div>
+            {% elif congestion.c22 >= 1000 %}<div class = "box2">22시</div>
+            {% elif congestion.c22 >= 300 %}<div class = "box1">22시</div>
+            {% else %}<div class = "box4">22시</div>
+            {% endif %}
+          {% if congestion.c23 >= 2500 %}<div class = "box3"> 23시</div>
+            {% elif congestion.c23 >= 1000 %}<div class = "box2">23시</div>
+            {% elif congestion.c23 >= 300 %}<div class = "box1">23시</div>
+            {% else %}<div class = "box4">23시</div>
+            {% endif %}
+
+          </center>
+          </div>
+          <br><br><br>
         </div>
       </div>
     </div>

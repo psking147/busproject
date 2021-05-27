@@ -1,5 +1,53 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<a href="stop">정류장별</a>
-<a href="line">노선별</a>
+
+<div style="color: #5a5a5a;">
+
+  <div id="myCarousel" data-bs-ride="carousel" >
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column bg-dark text-white">
+
+  <main class="px-2">
+    <h1><br>2021 종합설계프로젝트_5조</h1>
+    <p class="lead">서울시 버스 혼잡도 측정 및 새로운 노선 생성</p>
+  </main>
+
+
+</div>
+
+  </div>
+
+  <div class="container marketing" style="padding-top: 3rem">
+
+    <div class="row">
+      <div class="col-lg-4" >
+
+        <img src="{%static 'busstop.png' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>정류장별 혼잡도</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+
+        <h2 style="font-family: 'Nanum Gothic'">정류장별 혼잡도</h2>
+        <p style="font-family: 'Nanum Gothic'">정류장별 혼잡도를 측정하여 나타냅니다</p>
+        <p><a class="btn btn-secondary" href="{% url 'sbclc:stopindex' %}"> View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+
+      <div class="col-lg-4">
+        <img src="{%static 'line.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>노선별 혼잡도</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+
+        <h2 style="font-family: 'Nanum Gothic'">노선별 혼잡도</h2>
+        <p style="font-family: 'Nanum Gothic'">노선별 혼잡도를 측정하여 나타냅니다.</p>
+        <p><a class="btn btn-secondary" href="{% url 'sbclc:lineindex' %}">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+
+            <div class="col-lg-4" >
+        <img src="{%static 'new.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>정류장별 혼잡도</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em"></text>
+
+        <h2 style="font-family: 'Nanum Gothic'">새로운 노선생성</h2>
+        <p style="font-family: 'Nanum Gothic'">혼잡도가 적은 노선을 새로 생성합니다.</p>
+        <p><a class="btn btn-secondary" href="{% url 'sbclc:newline' %}"> View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+
+    </div><!-- /.row -->
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+</div>
 {% endblock %}

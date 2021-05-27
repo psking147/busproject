@@ -12,4 +12,7 @@ urlpatterns = [
     path('line', views.line_index, name='lineindex'),
     path('line/<str:line_line>', views.line_detail, name='linedetail'),
     path('maps', views.maps, name='maps'),
+    path('newline', views.newline, name='newline'),
+    path('confirm', views.confirm, name='confirm'),
+    #path('csvtomodel', views.csvtomodel, name='csvtomodel'),
 ]

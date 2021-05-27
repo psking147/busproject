@@ -20,7 +20,7 @@ class LineCongestionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Stop, StopAdmin)
-admin.site.register(Line, StopAdmin)
+admin.site.register(Line, LineAdmin)
 admin.site.register(StopCongestion, StopCongestionAdmin)
 admin.site.register(LineCongestion, LineCongestionAdmin)
 

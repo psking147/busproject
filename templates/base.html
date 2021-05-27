@@ -13,9 +13,22 @@
 
     <title>서울시 버스 혼잡도 측정 및 노선 생성 </title>
     <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;}
+        }
         div.left {
             width: 35%;
             float: left;
+            height: 100vh;
         }
         div.right {
             margin-top:3%;
@@ -36,6 +49,46 @@
             height:40vh;
             border:none;
         }
+        form.form1 {
+            /* Just to center the form on the page */
+            margin: 50, 50, 50, 50px;
+            width: 400px;
+            /* To see the outline of the form */
+            padding: 1em;
+            border: 1px solid #CCC;
+            border-radius: 1em;
+        }
+        button:hover.b1 {
+            background-color: #707070;
+        }
+        button.b1 {
+            display: inline-block;
+            width: 150px;
+            height: 40px;
+            text-align: center;
+            text-decoration: none;
+
+            outline: none;
+            background-color: #333;
+	        color: #fff;
+	        border-radius: 12px;
+        }
+        button::before.b1,
+        button::after.b1 {
+            position: absolute;
+            z-index: -1;
+            display: block;
+            content: '';
+        }
+        button.b1,
+        button::before.b1,
+        button::after.b1 {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +105,10 @@
           </li>
             <li class="nav-item">
             <a class="nav-link" href="{% url 'sbclc:lineindex' %}">노선별 혼잡도</a>
+          </li>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'sbclc:newline' %}">새 노선 생성</a>
           </li>
         </ul>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">

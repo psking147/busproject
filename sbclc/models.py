@@ -25,6 +25,7 @@ class Line(models.Model):
     line_num = models.CharField(max_length=10)
     order = models.PositiveIntegerField()
     stop = models.PositiveIntegerField()
+    stop_name = models.CharField(max_length=30, default='a')
 
     def __str__(self):
         return self.line_num + '(' + str(self.order) + ', ' + str(self.stop) + ')'
