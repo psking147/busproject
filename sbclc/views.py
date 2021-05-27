@@ -535,7 +535,6 @@ def csvtomodel(request):
                 yVector=row['yVector'],
                 pair=row['pair']
             )
-    '''
 
 
     #line congestion table
@@ -548,6 +547,7 @@ def csvtomodel(request):
                 line=row['버스번호'],
                 congestion=row['혼잡도']
             )
+    '''
     #stop congestion table
     path4 = '/home/ubuntu/projects/mysite/data/bus_station_com.csv'
     with open(path4, newline='', encoding='CP949') as csvfile:
