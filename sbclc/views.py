@@ -511,6 +511,7 @@ def newcong(request):
     return render(request, "sbclc/newcong.html", context)
 
 def csvtomodel(request):
+    '''
     #stop table
     print('start')
     path1 = '/home/ubuntu/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'
@@ -534,18 +535,8 @@ def csvtomodel(request):
                 yVector=row['yVector'],
                 pair=row['pair']
             )
-    #line table
-    path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
-    with open(path2, newline='', encoding='CP949') as csvfile:
-        data_reader = csv.DictReader(csvfile)
-        for row in data_reader:
-            print(row)
-            Line.objects.create(
-                line_num=row['노선명'],
-                order=row['순번'],
-                stop=row['정류소번호'],
-                stop_name=row['정류소명']
-            )
+    '''
+
 
     #line congestion table
     path3 = '/home/ubuntu/projects/mysite/data/bus_line_com.csv'
@@ -589,5 +580,17 @@ def csvtomodel(request):
                 c21=row['21시'],
                 c22=row['22시'],
                 c23=row['23시'],
+            )
+    #line table
+    path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
+    with open(path2, newline='', encoding='CP949') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            print(row)
+            Line.objects.create(
+                line_num=row['노선명'],
+                order=row['순번'],
+                stop=row['정류소번호'],
+                stop_name=row['정류소명']
             )
     return HttpResponse('create models~~')
