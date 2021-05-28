@@ -137,38 +137,55 @@ def confirm(request):
 
     if gu == "강남구":
         source_ars = 23458
+        returns = [23366]
     elif gu == "강동구":
         source_ars = 25101
+        returns = [25102]
     elif gu == "강북구":
         source_ars = 9102
+        returns = [9104]
     elif gu == "강서구":
         source_ars = 16435
+        returns = [16434]
     elif gu == "관악구":
         source_ars = 21809
+        returns = [21337]
     elif gu == "광진구":
         source_ars = 5189
+        returns = [5209]
     elif gu == "구로구":
         source_ars = 17290
+        returns = [17289]
     elif gu == "금천구":
         source_ars = 18219
+        returns = [18708]
     elif gu == "노원구":
         source_ars = 11193
+        returns = [11209]
     elif gu == "도봉구":
         source_ars = 10340
+        returns = [10341]
     elif gu == "마포구":
         source_ars = 14271
+        returns = [14272]
     elif gu == "서초구":
         source_ars = 22367
+        returns = [22378]
     elif gu == "성북구":
         source_ars = 8161
+        returns = [8162]
     elif gu == "송파구":
         source_ars = 24503
+        returns = [24658]
     elif gu == "양천구":
         source_ars = 15718
+        returns = [15373]
     elif gu == "은평구":
         source_ars = 12469
+        returns = [12470]
     elif gu == "중랑구":
         source_ars = 7418
+        returns = [7550]
     line_length = int(distance)
     stops_label = pd.read_csv('data/정류장분류_혼잡도_방향_짝.csv', encoding="CP949")
 
@@ -464,11 +481,16 @@ def confirm(request):
             print('nothing-error', error)
 
         before_ars = src_ars
+        if next_ars != dest_ars:
+            pairstop = stops_label[stops_label['ARS-ID'] == next_ars].reset_index(drop=True).iloc[0, 12]
+            returns.insert(0, pairstop)
         src_ars = next_ars
         line_stops.append(src_ars)
         total_dist += local_dist
         stops.remove(src_ars)
         print(src_ars, total_dist, len(stops), num)
+    for s in returns:
+        line_stops.append(s)
 
 
     #make the map
@@ -499,19 +521,31 @@ def confirm(request):
     stop_list = []
     for s in line_stops:
         stop_list = stop_list + list(Stop.objects.filter(ars=s))
+    list_int = list(map(str, line_stops))
+    request.session['list'] = list_int
 
-    print(stop_list)
-    print(line_stops)
-    context = {'m': m, 'stop_list': stop_list, "distance": round(total_dist, 2)}
+    context = {'m': m, 'stop_list': stop_list, "distance": round(total_dist, 2)*2}
     return render(request, "sbclc/confirm.html", context)
 
 
 def newcong(request):
-    context = {}
+    stops = request.session.get('list')
+    context = {'stops': stops}
     return render(request, "sbclc/newcong.html", context)
 
+'''
 def csvtomodel(request):
-    '''
+    path1 = '/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'
+    print('start2')
+    with open(path1, newline='', encoding='CP949') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            t = Stop.objects.get(ars=row['ARS-ID'])
+            t.pair = int(row['pair'])  # change field
+            t.save()  # this will update only
+            print(row)
+
+    
     #stop table
     print('start')
     path1 = '/home/ubuntu/projects/mysite/data/정류장분류_혼잡도_방향_짝.csv'

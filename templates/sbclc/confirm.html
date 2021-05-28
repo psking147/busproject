@@ -3,11 +3,9 @@
 {% block content %}
 <div class="left" id="left" style="overflow:scroll;">
     <div class="container my-3">
-        <div>
-            <b>생성된 노선 - 약 {{ distance }}km</b>
-            <a href="">혼잡도 예측</a>
+        <b>생성된 노선 - 약 {{ distance }}km</b>
+            <button style="float:right;" class="btn btn-outline-secondary" type="button" onclick="location.href='/newcong'" >혼잡도 예측</button>
         </div>
-
         <table class="table">
         <thead>
         <tr class="thead-dark">
