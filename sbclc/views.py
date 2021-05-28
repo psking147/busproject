@@ -582,7 +582,7 @@ def csvtomodel(request):
                     c22=row['22시'],
                     c23=row['23시'],
                 )
-    '''
+
     #line table
     path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
     with open(path2, newline='', encoding='CP949') as csvfile:
@@ -597,3 +597,4 @@ def csvtomodel(request):
                     stop_name=row['정류소명']
                 )
     return HttpResponse('create models~~')
+    '''
