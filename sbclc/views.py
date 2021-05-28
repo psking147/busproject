@@ -589,7 +589,7 @@ def csvtomodel(request):
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
-            if int(row['index']) > 10719:
+            if int(row['index']) > 28896:
                 Line.objects.create(
                     line_num=row['노선명'],
                     order=row['순번'],
