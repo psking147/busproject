@@ -547,7 +547,7 @@ def csvtomodel(request):
                 line=row['버스번호'],
                 congestion=row['혼잡도']
             )
-    '''
+
     #stop congestion table
     path4 = '/home/ubuntu/projects/mysite/data/bus_station_com.csv'
     with open(path4, newline='', encoding='CP949') as csvfile:
@@ -582,16 +582,18 @@ def csvtomodel(request):
                     c22=row['22시'],
                     c23=row['23시'],
                 )
+    '''
     #line table
     path2 = '/home/ubuntu/projects/mysite/data/stationlist.csv'
     with open(path2, newline='', encoding='CP949') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
             print(row)
-            Line.objects.create(
-                line_num=row['노선명'],
-                order=row['순번'],
-                stop=row['정류소번호'],
-                stop_name=row['정류소명']
-            )
+            if int(row['index']) > 10719:
+                Line.objects.create(
+                    line_num=row['노선명'],
+                    order=row['순번'],
+                    stop=row['정류소번호'],
+                    stop_name=row['정류소명']
+                )
     return HttpResponse('create models~~')
