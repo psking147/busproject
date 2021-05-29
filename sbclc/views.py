@@ -10,6 +10,7 @@ from folium import IFrame
 from django.http import HttpResponse
 import csv
 import pandas as pd
+import numpy as np
 from haversine import haversine
 
 def start(request):
@@ -529,8 +530,267 @@ def confirm(request):
 
 
 def newcong(request):
-    stops = request.session.get('list')
-    context = {'stops': stops}
+    newLineStationList = request.session.get('list')
+
+    def makeNewLineDirectODList(rdr, newLineStationList, newLineDirectODList, transferStationCandidateList, dayFactor):
+        for ODData in rdr:
+            if ODData[2] in newLineStationList:
+                if ODData[4] in newLineStationList:
+                    """새 노선과 일치하는 기존 노선 구간"""
+                    directFlag = True
+                    appendFlag = True
+                    for k in newLineDirectODList:
+                        if k[0] == ODData[2] and k[1] == ODData[4]:
+                            k[2] += dayFactor * int(ODData[8])
+                            if ODData[1] not in k[3]:
+                                k[3].append(ODData[1])
+                            appendFlag = False
+                            break;
+                    if appendFlag:
+                        newLineDirectODList.append([ODData[2], ODData[4], dayFactor * int(ODData[8]), [ODData[1]]])
+                else:
+                    appendFlag = True
+                    for k in transferStationCandidateList:
+                        if k[0] == ODData[2] and k[1] == ODData[4]:
+                            k[2] += dayFactor * int(ODData[8])
+                            if ODData[1] not in k[3]:
+                                k[3].append(ODData[1])
+                            appendFlag = False
+                            break;
+                    if appendFlag:
+                        transferStationCandidateList.append(
+                            [ODData[2], ODData[4], dayFactor * int(ODData[8]), [ODData[1]]])
+
+    def makeNewLineTransferODList(rdr, transferStationCandidateList, newLineStationList, newLineTransferODList,
+                                  dayFactor):
+        transferStationCandidateList.sort(key=lambda station: station[0])
+        transferStationCandidateListLookup = []
+        for i in transferStationCandidateList:
+            transferStationCandidateListLookup.append(i[1])
+
+        for ODData in rdr:
+            if ODData[2] not in transferStationCandidateListLookup:
+                continue
+            for idx in range(transferStationCandidateListLookup.index(ODData[2]), len(transferStationCandidateList)):
+                if ODData[2] == transferStationCandidateListLookup[idx]:
+                    if ODData[4] in newLineStationList:
+                        if ODData[1] in transferStationCandidateList[idx][3]:
+                            continue;
+                        appendFlag = True
+                        for k in newLineTransferODList:
+                            if k[4] == ODData[2] and k[5] == ODData[4]:
+                                k[6] += dayFactor * int(ODData[8])
+                                if ODData[1] not in k[7]:
+                                    k[7].append(ODData[1])
+                                appendFlag = False
+                                break;
+                        if appendFlag:
+                            i = transferStationCandidateList[idx]
+                            newLineTransferODList.append(
+                                [i[0], i[1], i[2], i[3], ODData[2], ODData[4], dayFactor * int(ODData[8]), [ODData[1]]])
+                else:
+                    break
+
+    def modifyLineCongestion(rdr, newLineDirectODList, newLineTransferODList, modifiedLineCongestion,
+                             lineCongestionDiffList, transferFactor):
+        lineNameList = []
+        temp_lineCongestionDiffList = []
+        lineOldPassengerList = []
+        congestionDecreaseRatioLimit = 0.25
+
+        next(rdr)
+        for oldCongestion in rdr:
+            modifiedLineCongestion.append(oldCongestion)
+            if oldCongestion[0] == '110A':
+                lineNameList.append('110A고려대')
+            elif oldCongestion[0] == '110B':
+                lineNameList.append('110B국민대')
+            else:
+                lineNameList.append(oldCongestion[0])
+            temp_lineCongestionDiffList.append([oldCongestion[0], 0, 0])
+            lineOldPassengerList.append(oldCongestion[1])
+
+        for directOD in newLineDirectODList:
+            nOfOldLine = len(directOD[3])
+            passengerDiff = directOD[2] / (nOfOldLine + 1) / nOfOldLine
+            # passengerDiff = abs(passengerDiff)
+            for oldLine in directOD[3]:
+                lineIdx = lineNameList.index(oldLine)
+                if int(modifiedLineCongestion[lineIdx][1]) - passengerDiff < congestionDecreaseRatioLimit * int(
+                        lineOldPassengerList[lineIdx]):
+                    continue
+                modifiedLineCongestion[lineIdx][1] = int(modifiedLineCongestion[lineIdx][1]) - passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][1] += passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][2] += passengerDiff / 30 / int(lineOldPassengerList[lineIdx])
+
+        for transferOD in newLineTransferODList:
+            passengerDiff = min(transferOD[2], transferOD[6]) * transferFactor
+            abs(passengerDiff)
+            for oldLine in transferOD[3]:
+                lineIdx = lineNameList.index(oldLine)
+                if int(modifiedLineCongestion[lineIdx][1]) - passengerDiff < congestionDecreaseRatioLimit * int(
+                        lineOldPassengerList[lineIdx]):
+                    continue
+                modifiedLineCongestion[lineIdx][1] = int(modifiedLineCongestion[lineIdx][1]) - passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][1] += passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][2] += passengerDiff / 30 / int(lineOldPassengerList[lineIdx])
+            for oldLine in transferOD[7]:
+                lineIdx = lineNameList.index(oldLine)
+                if int(modifiedLineCongestion[lineIdx][1]) - passengerDiff < congestionDecreaseRatioLimit * int(
+                        lineOldPassengerList[lineIdx]):
+                    continue
+                modifiedLineCongestion[lineIdx][1] = int(modifiedLineCongestion[lineIdx][1]) - passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][1] += passengerDiff / 30
+                temp_lineCongestionDiffList[lineIdx][2] += passengerDiff / 30 / int(lineOldPassengerList[lineIdx])
+
+        for t in temp_lineCongestionDiffList:
+            if (t[1] == 0):
+                continue
+
+            lineCongestionDiffList.append(t)
+
+    def modifyStationCongestion(rdr, newLineTransferODList, modifiedStationCongestion, stationCongestionDiffList,
+                                transferFactor):
+        stationARSList = []
+        temp_stationCongestionDiffList = []
+        oldStationPassengerList = []
+        congestionDecreaseRatioLimit = 0.25
+
+        next(rdr)
+        for oldCongestion in rdr:
+            modifiedStationCongestion.append(oldCongestion)
+            if (len(oldCongestion[0]) == 4):
+                stationARSList.append('0' + oldCongestion[0])
+            else:
+                stationARSList.append(oldCongestion[0])
+            temp_stationCongestionDiffList.append(
+                [oldCongestion[0], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+            passengerPerStation = 0
+            for hour in range(1, 25):
+                passengerPerStation += int(oldCongestion[hour])
+            oldStationPassenger_temp = oldCongestion[1:25]
+            oldStationPassenger_temp.append(passengerPerStation)
+            oldStationPassengerList.append(
+                oldStationPassenger_temp)  # oldStationPassengerList의 마지막 원소는 각 정류장의 시간대별 승차량 합=각 정류장 월 승차량
+
+        for transferOD in newLineTransferODList:
+            passengerDiff = min(transferOD[2], transferOD[6]) / transferFactor
+            # passengerDiff = abs(passengerDiff)
+            if len(transferOD[1]) == 0:
+                continue;
+            stationIdx = stationARSList.index(transferOD[1])
+            passengerPerStation = oldStationPassengerList[stationIdx][-1]
+            if sum(list(map(int, modifiedStationCongestion[stationIdx][
+                                 1:25]))) - passengerDiff < congestionDecreaseRatioLimit * passengerPerStation:
+                continue;
+            for hours in range(0, 24):
+                ratio = int(oldStationPassengerList[stationIdx][hours]) / passengerPerStation
+                modifiedStationCongestion[stationIdx][hours + 1] = float(
+                    modifiedStationCongestion[stationIdx][hours + 1]) - passengerDiff * ratio
+                temp_stationCongestionDiffList[stationIdx][hours + 1] += passengerDiff * ratio
+
+            temp_stationCongestionDiffList[stationIdx][-1] += passengerDiff / passengerPerStation
+
+        for t in temp_stationCongestionDiffList:
+            if (t[1] == 0):
+                continue
+
+            stationCongestionDiffList.append(t)
+
+    # 환승 안하는 경우
+    csv0316 = open('data/노선별_OD_20210316.csv', 'r', encoding='euc-kr')
+    csv0320 = open('data/노선별_OD_20210320.csv', 'r', encoding='euc-kr')
+    csv0321 = open('data/노선별_OD_20210321.csv', 'r', encoding='euc-kr')
+
+    rdr0 = csv.reader(csv0316)
+    rdr1 = csv.reader(csv0320)
+    rdr2 = csv.reader(csv0321)
+    newLineDirectODList = []
+    transferStationCandidateList = []
+    newLineTransferODList = []
+
+    makeNewLineDirectODList(rdr0, newLineStationList, newLineDirectODList, transferStationCandidateList, 5)
+    makeNewLineDirectODList(rdr1, newLineStationList, newLineDirectODList, transferStationCandidateList, 1)
+    makeNewLineDirectODList(rdr2, newLineStationList, newLineDirectODList, transferStationCandidateList, 1)
+
+    csv0316.close()
+    csv0320.close()
+    csv0321.close()
+
+    # 환승 하는 경우
+    csv0316 = open('data/노선별_OD_20210316.csv', 'r', encoding='euc-kr')
+    csv0320 = open('data/노선별_OD_20210320.csv', 'r', encoding='euc-kr')
+    csv0321 = open('data/노선별_OD_20210321.csv', 'r', encoding='euc-kr')
+
+    rdr0 = csv.reader(csv0316)
+    rdr1 = csv.reader(csv0320)
+    rdr2 = csv.reader(csv0321)
+
+    makeNewLineTransferODList(rdr0, transferStationCandidateList, newLineStationList, newLineTransferODList, 5)
+    makeNewLineTransferODList(rdr1, transferStationCandidateList, newLineStationList, newLineTransferODList, 1)
+    makeNewLineTransferODList(rdr2, transferStationCandidateList, newLineStationList, newLineTransferODList, 1)
+
+    csv0316.close()
+    csv0320.close()
+    csv0321.close()
+
+    for i in newLineDirectODList:
+        i[2] /= 7
+        i[2] *= 30
+    for i in newLineTransferODList:
+        i[2] /= 7
+        i[2] *= 30
+        i[6] /= 7
+        i[6] *= 30
+
+    csvLine = open('data/bus_line_com.csv', 'r', encoding='CP949')
+    csvStation = open('data/bus_station_com.csv', 'r', encoding='CP949')
+
+    rdr10 = csv.reader(csvLine)
+    rdr11 = csv.reader(csvStation)
+
+    modifiedLineCongestion = []
+    modifiedStationCongestion = []
+
+    lineCongestionDiffList = []
+    stationCongestionDiffList = []
+
+    modifyLineCongestion(rdr10, newLineDirectODList, newLineTransferODList, modifiedLineCongestion,
+                         lineCongestionDiffList, 0.10)  # 마지막 인자는 환승객 변화량의 예상 비율
+    modifyStationCongestion(rdr11, newLineTransferODList, modifiedStationCongestion, stationCongestionDiffList,
+                            0.10)  # 마지막 인자는 환승객 변화량의 예상 비율
+
+    linediffsum = 0
+    linediffpsum = 0
+    for line in lineCongestionDiffList:
+        line[1] = round(line[1], 4)
+        line[2] = round(line[2] * 100, 4)
+        linediffsum += line[1]
+        linediffpsum += line[2]
+    linediffavg = round((linediffsum / len(lineCongestionDiffList)), 4)
+    linediffpavg = round((linediffpsum / len(lineCongestionDiffList)), 4)
+
+
+    stationCongestionDiffList2 = []
+    stationdiffsum = 0
+    stationdiffpsum = 0
+    for stop in stationCongestionDiffList:
+        a = []
+        a.append(stop[0])
+        a.append(round(sum(stop[1:25]), 4))
+        a.append(round(stop[25] * 100, 4))
+        stationCongestionDiffList2.append(a)
+        stationdiffsum += round(sum(stop[1:25]), 4)
+        stationdiffpsum += round(stop[25] * 100, 4)
+
+    stationdiffavg = round((stationdiffsum / len(stationCongestionDiffList)), 4)
+    stationdiffpavg = round((stationdiffpsum / len(stationCongestionDiffList)), 4)
+
+
+    context = {'linediff': lineCongestionDiffList, 'stopdiff': stationCongestionDiffList2,
+               'linediffavg': linediffavg, 'linediffpavg': linediffpavg,
+               'stopdiffavg': stationdiffavg, 'stopdiffpavg': stationdiffpavg
+               }
     return render(request, "sbclc/newcong.html", context)
 
 '''

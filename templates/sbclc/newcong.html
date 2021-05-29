@@ -1,7 +1,60 @@
 {% extends 'base.html' %}
 {% load sbclc_filter %}
 {% block content %}
-{% if stops %}
-{{ stops }}
-{% endif %}
+<div class="left5" style="overflow:scroll;">
+    <div class="container my-3">
+        <center><b>정류장 혼잡도 감소 예측 (평균 감소량: {{ stopdiffavg }}, 평균 감소율: {{ stopdiffpavg }}%)</b></center>
+        <br>
+        <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>정류장 ARS</th>
+            <th>혼잡도 감소량</th>
+            <th>혼잡도 감소율(%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if stopdiff %}
+        {% for stop in stopdiff %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            {% for element in stop %}
+            <td> {{ element }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
+<div class="right5" style="overflow:scroll;">
+     <div class="container my-3">
+        <center><b>노선 혼잡도 감소 예측 (평균 감소량: {{ linediffavg }}, 평균 감소율: {{ linediffpavg }}%)</b></center>
+        <br>
+        <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>노선 번호</th>
+            <th>혼잡도 감소량</th>
+            <th>혼잡도 감소율(%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if linediff %}
+        {% for line in linediff %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            {% for element in line %}
+            <td> {{ element }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
