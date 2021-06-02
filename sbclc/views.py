@@ -659,10 +659,11 @@ def newcong(request):
         next(rdr)
         for oldCongestion in rdr:
             modifiedStationCongestion.append(oldCongestion)
-            if (len(oldCongestion[0]) == 4):
-                stationARSList.append('0' + oldCongestion[0])
-            else:
-                stationARSList.append(oldCongestion[0])
+            #if (len(oldCongestion[0]) == 4):
+            #    stationARSList.append('0' + oldCongestion[0])
+            #else:
+            #    stationARSList.append(oldCongestion[0])
+            stationARSList.append(oldCongestion[0])
             temp_stationCongestionDiffList.append(
                 [oldCongestion[0], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             passengerPerStation = 0
