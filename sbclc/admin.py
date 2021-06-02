@@ -12,7 +12,7 @@ class LineAdmin(admin.ModelAdmin):
 
 
 class StopCongestionAdmin(admin.ModelAdmin):
-    search_fields = ['stop.ars', 'stop.name']
+    search_fields = ['stop__ars', 'stop__name']
 
 
 class LineCongestionAdmin(admin.ModelAdmin):
